@@ -7,22 +7,32 @@ export function getList() {
     .then(data => data.json())
 }
 
+const token = "6ae33a85855d94d4879dace98654d2a54f81bf335a3440121e6caff536e718ad"
 
-const baseURL = "https://gorest.co.in/public/v2/users"
-
-
-
-export function setItem(item) {
-    const token = "f21bb6c5b7a6453a30da119508777777c5f0b6a902016b7f2fd6377aa7a549ab"
-    
-    return fetch('https://gorest.co.in/public/v2/users?access-token=6ae33a85855d94d4879dace98654d2a54f81bf335a3440121e6caff536e718ad', {
-        method: 'POST',
-        Authorization : `Bearer ${token}`,
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept' : 'application/json',
-        },
-        body: JSON.stringify({ item })
-    })
-    .then(data => data.json()) 
+export function setItem(item){
+        axios
+            .post("https://gorest.co.in/public/v2/posts", {
+                "id": 123,
+                "title" : "Yes We Are Here...",
+                "user": "Ahmad Wali",
+                "user_id": 1232,
+                "body": "This is the last drop of bugs I think"
+            }
+            ).catch((error) => {
+                if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+                } else if (error.request) {
+                  console.log(error.request);
+                } else {
+                  console.log("Error", error.message);
+                }
+                console.log(error.config);
+              });
 }
+
+
+
+
+
