@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { getList } from '../sevices/APIs'
+import { getList, setItem } from '../sevices/APIs'
 
 
 export default function App () {
+    const [titleInput, setTitleInput] = useState('');
     const [list, setList] = useState([]);
-
     useEffect(() => {
         let mounted = true;
         getList()
@@ -15,6 +15,11 @@ export default function App () {
             })
             return () => mounted = false;
     }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setItem(titleInput)
+    } 
     
 
 
@@ -27,6 +32,15 @@ export default function App () {
                     {list.map(item => <h3 key={item.title}><span className="bold">Title:</span> {item.title} <p>ID: {item.id}</p> <hr /> {item.body}</h3>)}
                     <hr />
                 </div>
+                <form className="form" onSubmit={handleSubmit}>
+                    <label>
+                        <p>Adding New Item: </p>
+                        <p>Title: </p><input type="text" onChange={event => setTitleInput(event.target.value)} value={titleInput} className="titletext"/>
+                        <p>Content: </p>
+                        <textarea type="text" className="bodytext"/>
+                        <button type="submit">Submit</button>
+                    </label>
+                </form>
         </div>
     )
 }
